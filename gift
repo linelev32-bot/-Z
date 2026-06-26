@@ -1,0 +1,636 @@
+TYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هديتك 🌹</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blush:#f8e8e4;
+    --cream:#fdf6f1;
+    --rose:#c97b84;
+    --rose-dark:#8e4a55;
+    --plum:#4a2e33;
+    --gold:#cc9966;
+    --line:#e3c3bf;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{
+    width:100%; height:100%;
+    background: var(--cream);
+    font-family:'Tajawal', sans-serif;
+    color:var(--plum);
+    overflow-x:hidden;
+  }
+  .page{
+    min-height:100vh;
+    width:100%;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    position:relative;
+    padding:40px 20px;
+    text-align:center;
+  }
+  .page.active{display:flex;}
+
+  /* ambient floating petals */
+  .petals{position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;}
+  .petal{
+    position:absolute; top:-40px;
+    font-size:18px;
+    opacity:0.55;
+    animation: fall linear infinite;
+    color: var(--rose);
+  }
+  @keyframes fall{
+    to{ transform: translateY(110vh) rotate(360deg); opacity:0;}
+  }
+
+  h1, h2, .display{
+    font-family:'Aref Ruqaa', serif;
+  }
+
+  /* ---------- LOGIN PAGE ---------- */
+  .rose-deco{
+    font-size:64px;
+    margin-bottom:6px;
+    filter: drop-shadow(0 4px 10px rgba(140,60,70,.25));
+    animation: sway 4s ease-in-out infinite;
+  }
+  @keyframes sway{
+    0%,100%{ transform: rotate(-4deg);}
+    50%{ transform: rotate(4deg);}
+  }
+  .login-card{
+    background: var(--blush);
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:40px 32px;
+    width:100%;
+    max-width:380px;
+    box-shadow:0 20px 50px -20px rgba(142,74,85,.35);
+    position:relative;
+    z-index:1;
+  }
+  .login-card h1{
+    font-size:30px;
+    color:var(--rose-dark);
+    margin-bottom:6px;
+  }
+  .login-card p.sub{
+    font-size:14px;
+    color:var(--rose);
+    margin-bottom:26px;
+  }
+  .field{
+    text-align:right;
+    margin-bottom:16px;
+  }
+  .field label{
+    display:block;
+    font-size:13px;
+    color:var(--rose-dark);
+    margin-bottom:6px;
+  }
+  .field input{
+    width:100%;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    font-family:'Tajawal',sans-serif;
+    font-size:15px;
+    outline:none;
+    transition:border-color .2s;
+  }
+  .field input:focus{ border-color: var(--rose); }
+  .btn{
+    border:none;
+    cursor:pointer;
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    border-radius:14px;
+    padding:13px 28px;
+    font-size:15px;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+    color:#fff;
+    width:100%;
+    margin-top:8px;
+    box-shadow:0 10px 24px -8px rgba(142,74,85,.55);
+  }
+  .btn-primary:hover{ transform: translateY(-2px); }
+  .error-msg{
+    color:#a23b3b;
+    font-size:13px;
+    margin-top:10px;
+    min-height:16px;
+  }
+
+  /* ---------- QUESTION PAGE ---------- */
+  .big-rose{
+    font-size:90px;
+    margin-bottom:10px;
+    animation: bloom 2.4s ease-in-out infinite;
+  }
+  @keyframes bloom{
+    0%,100%{ transform: scale(1) rotate(0deg);}
+    50%{ transform: scale(1.08) rotate(3deg);}
+  }
+  .question-box{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:24px;
+    padding:38px 30px;
+    max-width:420px;
+    width:100%;
+    box-shadow:0 20px 50px -20px rgba(142,74,85,.3);
+    position:relative; z-index:1;
+  }
+  .question-box h2{
+    font-size:26px;
+    color:var(--rose-dark);
+    margin-bottom:28px;
+  }
+  .answers{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  #btnYes, #btnNo{
+    transition: all .25s ease;
+  }
+  #btnYes{
+    background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+    color:#fff;
+  }
+  #btnNo{
+    background:#f1dede;
+    color:var(--rose-dark);
+  }
+  .no-caption{
+    font-size:12px;
+    color:#b48a8a;
+    margin-top:14px;
+  }
+
+  /* ---------- COUPONS PAGE ---------- */
+  .coupons-wrap{ max-width:520px; width:100%; position:relative; z-index:1;}
+  .coupons-wrap h2{ color:var(--rose-dark); font-size:26px; margin-bottom:6px;}
+  .coupons-wrap p.sub{ font-size:13px; color:var(--rose); margin-bottom:22px;}
+  .coupons-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:14px;
+    margin-bottom:26px;
+  }
+  .coupon{
+    background: var(--blush);
+    border:1.5px dashed var(--rose);
+    border-radius:16px;
+    padding:18px 10px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:700;
+    color:var(--rose-dark);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    transition: transform .15s, background .2s;
+    min-height:90px;
+    justify-content:center;
+  }
+  .coupon:hover{ transform: translateY(-3px); background:#f3d9d4; }
+  .coupon .icon{ font-size:22px; }
+  .coupon.opened{ opacity:.55; }
+
+  /* Modal */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(74,46,51,.55);
+    display:none; align-items:center; justify-content:center;
+    z-index:50; padding:20px;
+  }
+  .modal-overlay.active{ display:flex; }
+  .modal-box{
+    background:#fff; border-radius:20px; padding:30px 26px;
+    max-width:360px; width:100%; text-align:center;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.4);
+    animation: popIn .25s ease;
+  }
+  @keyframes popIn{
+    from{ transform: scale(.85); opacity:0;}
+    to{ transform: scale(1); opacity:1;}
+  }
+  .modal-box .icon-big{ font-size:36px; margin-bottom:10px; }
+  .modal-box p{ font-size:15px; line-height:1.7; color:var(--plum); margin-bottom:18px;}
+  .modal-box button{
+    background: var(--rose-dark); color:#fff; border:none;
+    border-radius:12px; padding:9px 22px; cursor:pointer; font-family:'Tajawal';
+  }
+
+  /* ---------- MUSIC PAGE ---------- */
+  .music-wrap{ position:relative; z-index:1; max-width:380px; width:100%;}
+  .music-wrap h2{ color:var(--rose-dark); margin-bottom:30px; font-size:24px;}
+  .vinyl{
+    width:180px; height:180px;
+    border-radius:50%;
+    margin:0 auto 26px;
+    background: radial-gradient(circle at center, var(--rose-dark) 0 18px, #2a1c1f 19px 22px, var(--plum) 23px 70%, var(--rose-dark) 71% 100%);
+    box-shadow:0 15px 35px -10px rgba(0,0,0,.4);
+    position:relative;
+    animation: spin 4s linear infinite paused;
+  }
+  .vinyl.spinning{ animation-play-state: running; }
+  .vinyl::before{
+    content:"";
+    position:absolute; inset:0;
+    border-radius:50%;
+    background: repeating-radial-gradient(circle, transparent 0 6px, rgba(255,255,255,.04) 7px 8px);
+  }
+  @keyframes spin{ to{ transform: rotate(360deg);} }
+  .play-btn{
+    width:64px; height:64px;
+    border-radius:50%;
+    border:none;
+    background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 12px 25px -8px rgba(142,74,85,.5);
+    margin-bottom:30px;
+  }
+  .secondary-link{
+    display:inline-block;
+    margin-top:6px;
+    font-size:14px;
+    color:var(--rose-dark);
+    text-decoration:underline;
+    cursor:pointer;
+    background:none; border:none; font-family:'Tajawal';
+  }
+
+  /* ---------- MESSAGE PAGE ---------- */
+  .message-wrap{ position:relative; z-index:1; max-width:480px; width:100%;}
+  .envelope{
+    font-size:70px;
+    cursor:pointer;
+    margin-bottom:18px;
+    transition: transform .2s;
+    display:inline-block;
+  }
+  .envelope:hover{ transform: scale(1.08) rotate(-3deg); }
+  .letter-box{
+    display:none;
+    background:#fffaf6;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:28px 24px;
+    text-align:right;
+    line-height:2;
+    font-size:15.5px;
+    color:var(--plum);
+    box-shadow:0 20px 45px -20px rgba(142,74,85,.3);
+    margin-top:10px;
+    margin-bottom:26px;
+    white-space:pre-line;
+  }
+  .letter-box.show{ display:block; animation: fadeUp .4s ease; }
+  @keyframes fadeUp{
+    from{ opacity:0; transform: translateY(12px);}
+    to{ opacity:1; transform: translateY(0);}
+  }
+  .letter-box .signoff{
+    margin-top:14px;
+    font-family:'Aref Ruqaa', serif;
+    font-size:19px;
+    color:var(--rose-dark);
+    text-align:left;
+  }
+
+  /* ---------- RATING PAGE ---------- */
+  .rate-wrap{ position:relative; z-index:1; max-width:420px; width:100%;}
+  .rate-wrap h2{ color:var(--rose-dark); font-size:24px; margin-bottom:8px;}
+  .rate-wrap p.sub{ font-size:13px; color:var(--rose); margin-bottom:24px;}
+  .hearts{
+    display:flex; justify-content:center; gap:10px; margin-bottom:26px;
+    direction:ltr;
+  }
+  .heart{
+    font-size:34px;
+    cursor:pointer;
+    color:#e8c9c9;
+    transition: color .2s, transform .15s;
+  }
+  .heart:hover{ transform: scale(1.15); }
+  .heart.active{ color:var(--rose-dark); }
+  textarea{
+    width:100%;
+    border-radius:14px;
+    border:1.5px solid var(--line);
+    padding:14px;
+    font-family:'Tajawal',sans-serif;
+    font-size:14px;
+    resize:vertical;
+    min-height:90px;
+    margin-bottom:18px;
+    outline:none;
+  }
+  textarea:focus{ border-color: var(--rose); }
+  .thanks-msg{
+    display:none;
+    color:var(--rose-dark);
+    font-family:'Aref Ruqaa', serif;
+    font-size:19px;
+    margin-top:10px;
+  }
+  .thanks-msg.show{ display:block; animation: fadeUp .4s ease; }
+
+  .nav-next{
+    margin-top:10px;
+  }
+
+  footer-hint{ display:none; }
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals"></div>
+
+<!-- PAGE 1: LOGIN -->
+<div class="page active" id="page-login">
+  <div class="rose-deco">🌹</div>
+  <div class="login-card">
+    <h1>أهلاً يا عسولة</h1>
+    <p class="sub">هذا الموقع لك وحدك… سجّلي دخولك</p>
+    <div class="field">
+      <label>اسم المستخدم</label>
+      <input type="text" id="username" placeholder="اسم المستخدم">
+    </div>
+    <div class="field">
+      <label>الباسورد</label>
+      <input type="password" id="password" placeholder="الباسورد">
+    </div>
+    <button class="btn btn-primary" onclick="tryLogin()">دخول 🌸</button>
+    <div class="error-msg" id="loginError"></div>
+  </div>
+</div>
+
+<!-- PAGE 2: QUESTION -->
+<div class="page" id="page-question">
+  <div class="question-box">
+    <div class="big-rose">🌹</div>
+    <h2>هل تقبلين وردتي؟</h2>
+    <div class="answers">
+      <button class="btn" id="btnYes" style="font-size:16px; padding:14px 30px;" onclick="goTo('page-coupons')">نعم 💗</button>
+      <button class="btn" id="btnNo" style="font-size:16px; padding:14px 30px;" onclick="shrinkNo()">لا</button>
+    </div>
+    <div class="no-caption" id="noCaption"></div>
+  </div>
+</div>
+
+<!-- PAGE 3: COUPONS -->
+<div class="page" id="page-coupons">
+  <div class="coupons-wrap">
+    <h2>كوبونات عسولة 🎁</h2>
+    <p class="sub">دوسي على أي كوبون عشان تشوفين محتواه</p>
+    <div class="coupons-grid" id="couponsGrid"></div>
+    <button class="btn btn-primary nav-next" style="max-width:200px;" onclick="goTo('page-music')">التالي ⟸</button>
+  </div>
+</div>
+
+<!-- PAGE 4: MUSIC -->
+<div class="page" id="page-music">
+  <div class="music-wrap">
+    <h2>خلي الجو يصير أحلى 🎶</h2>
+    <div class="vinyl" id="vinyl"></div>
+    <div>
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+    </div>
+    <audio id="audioPlayer" loop>
+      <source src="song.m4a" type="audio/mp4">
+    </audio>
+    <div>
+      <button class="secondary-link" onclick="goTo('page-message-intro')">رسالة خاصة ✉️</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 5: MESSAGE -->
+<div class="page" id="page-message-intro">
+  <div class="message-wrap">
+    <h2 style="color:var(--rose-dark); margin-bottom:10px;">لكِ يا sweetie 💌</h2>
+    <div class="envelope" id="envelope" onclick="openLetter()">✉️</div>
+    <p style="font-size:13px; color:var(--rose); margin-bottom:6px;" id="envHint">دوسي على المغلف</p>
+    <div class="letter-box" id="letterBox">
+أتمنى نجحت هديه عيد ميلادك، أدري انها متأخره بشهر بس ان تصل اخيرًا خير من أن لا تصل…
+
+أستفتح رِسالتي بنورٍ من إشراقة ابتسامتك.. اسمحي لي بتغزل بكل حرف من حروفك كأبله من الجاهلية لا يعترف الا بخيله و مدوناته حول حب قلبه، ألا يحق لي بأن أصبح أسوء منه؟
+
+فصاحتي لا يكتبها سوء، قلبٌ استبصر بنور من الأمل فُتح باخر ممر معتم، و انا اراك املي حتى لو شق علي وصوله.
+
+أحبك، ولكن الحب أصغر من يصف مقداره لك.
+            <div class="signoff">دائمًا لك 🌹</div>
+        </div>
+    <button class="btn btn-primary nav-next" style="max-width:240px; display:none;" id="toRatingBtn" onclick="goTo('page-rating')">التالي للتقييم ⟸</button>
+  </div>
+</div>
+
+<!-- PAGE 6: RATING -->
+<div class="page" id="page-rating">
+  <div class="rate-wrap">
+    <h2>قيّمي هديتك 💕</h2>
+    <p class="sub">بدل النجوم… قلوب! كل ما زاد التقييم احمرّت أكثر</p>
+    <div class="hearts" id="heartsRow">
+      <span class="heart" data-v="1">♡</span>
+      <span class="heart" data-v="2">♡</span>
+      <span class="heart" data-v="3">♡</span>
+      <span class="heart" data-v="4">♡</span>
+      <span class="heart" data-v="5">♡</span>
+    </div>
+    <textarea id="feedback" placeholder="اكتبي رأيك أو أي شي حابة تقولينه..."></textarea>
+    <button class="btn btn-primary" style="max-width:220px;" onclick="submitRating()">إرسال 💌</button>
+    <div class="thanks-msg" id="thanksMsg">تم استلام رأيك… يا عسولة قلبك كله حلاوة 🌹</div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="icon-big" id="modalIcon">🌸</div>
+    <p id="modalText"></p>
+    <button onclick="closeModal()">إغلاق</button>
+  </div>
+</div>
+
+<script>
+/* ---------- Petals background ---------- */
+const petalsWrap = document.getElementById('petals');
+const petalChars = ['🌸','🌹','🌷','💗'];
+for(let i=0;i<14;i++){
+  const p = document.createElement('div');
+  p.className='petal';
+  p.textContent = petalChars[Math.floor(Math.random()*petalChars.length)];
+  p.style.left = Math.random()*100+'%';
+  p.style.animationDuration = (6+Math.random()*8)+'s';
+  p.style.animationDelay = (Math.random()*8)+'s';
+  p.style.fontSize = (12+Math.random()*14)+'px';
+  petalsWrap.appendChild(p);
+}
+
+/* ---------- Navigation ---------- */
+function goTo(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ---------- Login ---------- */
+function tryLogin(){
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value.trim();
+  const err = document.getElementById('loginError');
+  if(u === 'zozi' && p === 'flower'){
+    err.textContent = '';
+    goTo('page-question');
+  } else {
+    err.textContent = 'حاولي مرة ثانية يا قمر 🌷';
+  }
+}
+// allow Enter key on password field
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('password').addEventListener('keydown', e=>{
+    if(e.key === 'Enter') tryLogin();
+  });
+});
+
+/* ---------- Question page (shrinking No) ---------- */
+let noScale = 1;
+let yesScale = 1;
+const noCaptions = [
+  'متأكدة؟ 🥺',
+  'فكري مرة ثانية...',
+  'بس شوفي حالها 🌹',
+  'ما عاد قدرت تضغطين عليه 😄'
+];
+function shrinkNo(){
+  const btnNo = document.getElementById('btnNo');
+  const btnYes = document.getElementById('btnYes');
+  noScale = Math.max(noScale - 0.18, 0.15);
+  yesScale = Math.min(yesScale + 0.16, 2.2);
+  btnNo.style.transform = `scale(${noScale})`;
+  btnYes.style.transform = `scale(${yesScale})`;
+  btnNo.style.opacity = noScale < 0.3 ? 0.5 : 1;
+
+  const cap = document.getElementById('noCaption');
+  const idx = Math.min(Math.floor((1-noScale)*5), noCaptions.length-1);
+  cap.textContent = noCaptions[idx] || '';
+
+  if(noScale <= 0.16){
+    btnNo.style.pointerEvents = 'none';
+  }
+}
+
+/* ---------- Coupons ---------- */
+const coupons = [
+  {icon:'🗣️', title:'فضفضة لا محدودة', text:'هذا الكوبون يخليك تفضفضين لي وقت ما تبين، عن أي شي، بلا حدود وبلا حكم. أنا سامع وسامعك دايم.'},
+  {icon:'🍣', title:'عزيمة سوشي', text:'كوبون يضمن لك عزيمة سوشي كاملة، تختارين المطعم والوقت، وأنا بس أدفع وأضحك معك.'},
+  {icon:'☕', title:'صباح هادئ', text:'كوبون لصباح نشرب فيه قهوة سوا (أو نتواصل بهدوء) قبل ما يبدأ يومك المزدحم.'},
+  {icon:'🎬', title:'سهرة فيلم', text:'كوبون لسهرة فيلم تختارينه أنتِ، وأنا أتابعه معك حتى لو مو نوعي المفضل 😄'},
+  {icon:'🎵', title:'أغنية لك', text:'كوبون لأغنية أرسلها لك في يوم تعبانة فيه، تكون مكتوبة وكأنها لك بالذات.'},
+  {icon:'📷', title:'ذكرى موثقة', text:'كوبون لصورة أو لقطة سوا نحتفظ بها كذكرى من يوم حلو نقرر نسويه.'},
+  {icon:'🌅', title:'نزهة بسيطة', text:'كوبون لمشوار بسيط أو نزهة قصيرة، بدون خطة، بس نمشي ونتكلم.'},
+  {icon:'💌', title:'رسالة مفاجئة', text:'كوبون لرسالة قصيرة أكتبها لك في يوم ما تتوقعينه، بس لأذكرك إنك مهمة.'}
+];
+
+const grid = document.getElementById('couponsGrid');
+coupons.forEach((c, i)=>{
+  const div = document.createElement('div');
+  div.className = 'coupon';
+  div.id = 'coupon-'+i;
+  div.innerHTML = `<div class="icon">${c.icon}</div><div>${c.title}</div>`;
+  div.onclick = ()=> openCoupon(i);
+  grid.appendChild(div);
+});
+
+function openCoupon(i){
+  const c = coupons[i];
+  document.getElementById('modalIcon').textContent = c.icon;
+  document.getElementById('modalText').textContent = c.text;
+  document.getElementById('modalOverlay').classList.add('active');
+  document.getElementById('coupon-'+i).classList.add('opened');
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+/* ---------- Music ---------- */
+const audio = document.getElementById('audioPlayer');
+const vinyl = document.getElementById('vinyl');
+const playBtn = document.getElementById('playBtn');
+let playing = false;
+function togglePlay(){
+  if(!playing){
+    audio.play().catch(()=>{ /* file may not be added yet */ });
+    vinyl.classList.add('spinning');
+    playBtn.textContent = '❚❚';
+  } else {
+    audio.pause();
+    vinyl.classList.remove('spinning');
+    playBtn.textContent = '▶';
+  }
+  playing = !playing;
+}
+
+/* ---------- Message ---------- */
+function openLetter(){
+  document.getElementById('letterBox').classList.add('show');
+  document.getElementById('envHint').style.display='none';
+  document.getElementById('toRatingBtn').style.display='inline-block';
+}
+
+/* ---------- Rating ---------- */
+const hearts = document.querySelectorAll('.heart');
+let currentRating = 0;
+hearts.forEach(h=>{
+  h.addEventListener('click', ()=>{
+    currentRating = parseInt(h.dataset.v);
+    updateHearts();
+  });
+});
+function updateHearts(){
+  hearts.forEach(h=>{
+    const v = parseInt(h.dataset.v);
+    if(v <= currentRating){
+      h.textContent = '♥';
+      h.classList.add('active');
+      const intensity = 0.5 + (v/5)*0.5;
+      h.style.color = `rgba(${142+(113*(1-intensity)).toFixed(0)*0}, 74, 85, ${intensity})`;
+      h.style.color = v <= currentRating ? shadeOfRed(v) : '';
+    } else {
+      h.textContent = '♡';
+      h.classList.remove('active');
+      h.style.color = '';
+    }
+  });
+}
+function shadeOfRed(v){
+  // darker/more saturated red as v increases
+  const shades = ['#e6a8a8','#d98e8e','#c97373','#b8504f','#8e2a2a'];
+  return shades[v-1];
+}
+function submitRating(){
+  document.getElementById('thanksMsg').classList.add('show');
+}
+</script>
+
+</body>
+</html>
